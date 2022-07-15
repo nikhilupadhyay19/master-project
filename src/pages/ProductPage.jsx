@@ -9,7 +9,7 @@ class ProductPage extends React.Component {
       products: [],
       isToggle: true
     };
-    this.toggleProductHandler = this.toggleProductHandler.bind(this);
+    //  this.toogleHandler = this.toogleHandler.bind(this);
   }
 
   timeOut(s) {
@@ -33,22 +33,6 @@ class ProductPage extends React.Component {
     }
   }
 
-  // toggleProductHandler = () => {
-  //   this.setState((prevState, prevProp) => {
-  //     return {
-  //       isToggle: !prevState.isToggle
-  //     };
-  //   });
-  // };
-
-  toggleProductHandler() {
-    this.setState((prevState, prevProp) => {
-      return {
-        isToggle: !prevState.isToggle
-      };
-    });
-  }
-
   async componentDidMount() {
     try {
       const data = await this.getJSON("https://restcountries.com/v3.1/all");
@@ -59,15 +43,28 @@ class ProductPage extends React.Component {
     }
   }
 
+  // toogleHandler() {
+  //   console.log(this);
+  // }
+
+  toogleHandler = () => {
+    console.log(this);
+  };
+
   render() {
     const { isLoading, products, isToggle } = this.state;
+    const cProducts = [...products];
     const previewText = "Please wait while the data has been loaded...";
 
     return (
       <div className="product-page">
-        <button onClick={this.toggleProductHandler}>Toggle State</button>
+        <button onClick={this.toogleHandler}>toogle</button>
         {isToggle ? <p>Welcome to Product page...</p> : <p>Good Bye...</p>}
-        {isLoading ? previewText : <Card products={products} />}
+        {isLoading ? (
+          previewText
+        ) : (
+          <Card products={cProducts} toogleHandler={this.toogleHandler} />
+        )}
       </div>
     );
   }
