@@ -1,7 +1,7 @@
 import React from "react";
 
 const Card = (prop) => {
-  const { products, toogleHandler } = prop;
+  const { products, deleteProductHandler } = prop;
   console.log(prop, products);
 
   return (
@@ -11,7 +11,9 @@ const Card = (prop) => {
           return (
             <div className="col-lg-3" key={product.cca3}>
               <div className="card">
-                <button onClick={toogleHandler}>click</button>
+                <button onClick={() => deleteProductHandler(product.cca3)}>
+                  click
+                </button>
                 <p>{product.name.common}</p>
               </div>
             </div>

@@ -9,7 +9,7 @@ class ProductPage extends React.Component {
       products: [],
       isToggle: true
     };
-    //  this.toogleHandler = this.toogleHandler.bind(this);
+    //  this.deleteProductHandler = this.deleteProductHandler.bind(this);
   }
 
   timeOut(s) {
@@ -43,12 +43,19 @@ class ProductPage extends React.Component {
     }
   }
 
-  // toogleHandler() {
+  // deleteProductHandler() {
   //   console.log(this);
   // }
 
-  toogleHandler = () => {
-    console.log(this);
+  deleteProductHandler = (id) => {
+    const cProducts = [...this.state.products];
+    console.log(cProducts);
+
+    const index = cProducts.findIndex((el) => el.cca3 === id);
+    cProducts.splice(index, 1);
+    this.setState((prevSate, prevProp) => {
+      return (prevSate.products = cProducts);
+    });
   };
 
   render() {
@@ -58,12 +65,15 @@ class ProductPage extends React.Component {
 
     return (
       <div className="product-page">
-        <button onClick={this.toogleHandler}>toogle</button>
+        <button onClick={this.deleteProductHandler}>toogle</button>
         {isToggle ? <p>Welcome to Product page...</p> : <p>Good Bye...</p>}
         {isLoading ? (
           previewText
         ) : (
-          <Card products={cProducts} toogleHandler={this.toogleHandler} />
+          <Card
+            products={cProducts}
+            deleteProductHandler={this.deleteProductHandler}
+          />
         )}
       </div>
     );
