@@ -5,6 +5,7 @@ class ProductPage extends React.Component {
   constructor() {
     super();
     this.state = {
+      isLoading: true,
       products: []
     };
   }
@@ -34,18 +35,20 @@ class ProductPage extends React.Component {
     try {
       const data = await this.getJSON("https://restcountries.com/v3.1/all");
       this.setState({ products: data });
+      this.setState({ isLoading: false });
     } catch (error) {
       console.error(error);
     }
   }
 
   render() {
-    const { products } = this.state;
+    const { products, isLoading } = this.state;
+    const previewText = "Please wait while the data has been loaded...";
 
     return (
       <div className="product-page">
         <p>Welcome to Product page...</p>
-        <Card products={products} />
+        {isLoading ? previewText : <Card products={products} />}
       </div>
     );
   }
