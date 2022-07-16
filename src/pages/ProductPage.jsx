@@ -1,5 +1,6 @@
 import React from "react";
 import { Card } from "../components/Card/Card";
+import { SearchBox } from "../components/SearchBox/SearchBox";
 
 class ProductPage extends React.Component {
   constructor() {
@@ -7,7 +8,8 @@ class ProductPage extends React.Component {
     this.state = {
       isLoading: true,
       products: [],
-      isToggle: true
+      isToggle: true,
+      searchQuery: ""
     };
     //  this.deleteProductHandler = this.deleteProductHandler.bind(this);
   }
@@ -43,9 +45,12 @@ class ProductPage extends React.Component {
     }
   }
 
-  // deleteProductHandler() {
-  //   console.log(this);
-  // }
+  searchProductHandler = (e) => {
+    let query = e.target.value.toLowerCase();
+    this.setState((prevState) => {
+      return (prevState.searchQuery = query);
+    });
+  };
 
   deleteProductHandler = (id) => {
     const cProducts = [...this.state.products];
@@ -57,19 +62,25 @@ class ProductPage extends React.Component {
   };
 
   render() {
-    const { isLoading, products, isToggle } = this.state;
-    const cProducts = [...products];
+    const { isLoading, products, isToggle, searchQuery } = this.state;
+    // const fProducts = products.filter((el) =>
+    //   el.name.common.toLowerCase().includes(searchQuery)
+    // );
+    const fProducts = products.filter(
+      (el) => el.name.common.toLowerCase().indexOf(searchQuery) !== -1
+    );
     const previewText = "Please wait while the data has been loaded...";
 
     return (
       <div className="product-page">
         <button onClick={this.deleteProductHandler}>toogle</button>
         {isToggle ? <p>Welcome to Product page...</p> : <p>Good Bye...</p>}
+        <SearchBox searchProductHandler={this.searchProductHandler} />
         {isLoading ? (
           previewText
         ) : (
           <Card
-            products={cProducts}
+            products={fProducts}
             deleteProductHandler={this.deleteProductHandler}
           />
         )}

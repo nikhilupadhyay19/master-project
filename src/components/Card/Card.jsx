@@ -2,7 +2,6 @@ import React from "react";
 
 const Card = (prop) => {
   const { products, deleteProductHandler } = prop;
-  console.log(prop, products);
 
   return (
     <div className="container">
