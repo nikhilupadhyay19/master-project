@@ -12,7 +12,7 @@ const Card = (prop) => {
             <div className="col-lg-3" key={product.cca3}>
               <div className="card">
                 <button onClick={() => deleteProductHandler(product.cca3)}>
-                  click
+                  <i className="icofont icofont-ui-delete"></i>
                 </button>
                 <p>{product.name.common}</p>
               </div>

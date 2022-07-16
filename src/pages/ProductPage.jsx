@@ -49,12 +49,10 @@ class ProductPage extends React.Component {
 
   deleteProductHandler = (id) => {
     const cProducts = [...this.state.products];
-    console.log(cProducts);
-
     const index = cProducts.findIndex((el) => el.cca3 === id);
     cProducts.splice(index, 1);
-    this.setState((prevSate, prevProp) => {
-      return (prevSate.products = cProducts);
+    this.setState((prevState) => {
+      return (prevState.products = cProducts);
     });
   };
 
