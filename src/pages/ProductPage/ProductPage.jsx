@@ -1,6 +1,7 @@
 import React from "react";
-import { Card } from "../components/Card/Card";
-import { SearchBox } from "../components/SearchBox/SearchBox";
+import { Card } from "../../components/Card/Card";
+import { SearchBox } from "../../components/SearchBox/SearchBox";
+import { SelectBox } from "../../components/SelectBox/SelectBox";
 
 class ProductPage extends React.Component {
   constructor() {
@@ -9,7 +10,8 @@ class ProductPage extends React.Component {
       isLoading: true,
       products: [],
       isToggle: true,
-      searchQuery: ""
+      searchQuery: "",
+      selectQuery: "Select All Continents"
     };
     //  this.deleteProductHandler = this.deleteProductHandler.bind(this);
   }
@@ -61,21 +63,52 @@ class ProductPage extends React.Component {
     });
   };
 
+  selectChangeHandler = (e) => {
+    this.setState((prevState) => {
+      return (prevState.selectQuery = e.target.value);
+    });
+  };
+
   render() {
-    const { isLoading, products, isToggle, searchQuery } = this.state;
+    let fProducts;
+    const {
+      isLoading,
+      products,
+      isToggle,
+      searchQuery,
+      selectQuery
+    } = this.state;
+    console.log(this.state);
+
     // const fProducts = products.filter((el) =>
     //   el.name.common.toLowerCase().includes(searchQuery)
     // );
-    const fProducts = products.filter(
-      (el) => el.name.common.toLowerCase().indexOf(searchQuery) !== -1
-    );
+
+    if (selectQuery === "Select All Continents") {
+      fProducts = products.filter(
+        (el) => el.name.common.toLowerCase().indexOf(searchQuery) !== -1
+      );
+    } else {
+      fProducts = products.filter(
+        (el) =>
+          el.name.common.toLowerCase().indexOf(searchQuery) !== -1 &&
+          el.continents[0] === selectQuery
+      );
+    }
+
     const previewText = "Please wait while the data has been loaded...";
+
+    console.log(fProducts);
 
     return (
       <div className="product-page">
         <button onClick={this.deleteProductHandler}>toogle</button>
         {isToggle ? <p>Welcome to Product page...</p> : <p>Good Bye...</p>}
         <SearchBox searchProductHandler={this.searchProductHandler} />
+        <SelectBox
+          data={fProducts}
+          selectChangeHandler={this.selectChangeHandler}
+        />
         {isLoading ? (
           previewText
         ) : (
