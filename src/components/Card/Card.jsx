@@ -1,7 +1,7 @@
 import React from "react";
 
 const Card = (prop) => {
-  const { products, deleteProductHandler } = prop;
+  const { products, deleteProductHandler, changeNameHandler } = prop;
 
   return (
     <div className="container">
@@ -14,6 +14,12 @@ const Card = (prop) => {
                   <i className="icofont icofont-ui-delete"></i>
                 </button>
                 <p>{product.name.common}</p>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={product.name.common}
+                  onChange={(e) => changeNameHandler(product.cca3, e)}
+                />
               </div>
             </div>
           );

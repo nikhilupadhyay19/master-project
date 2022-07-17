@@ -11,7 +11,8 @@ class ProductPage extends React.Component {
       products: [],
       isToggle: true,
       searchQuery: "",
-      selectQuery: "Select All Continents"
+      selectQuery: "Select All Continents",
+      changeNameQuery: ""
     };
     //  this.deleteProductHandler = this.deleteProductHandler.bind(this);
   }
@@ -69,6 +70,22 @@ class ProductPage extends React.Component {
     });
   };
 
+  changeNameHandler = (id, e) => {
+    let query = e.target.value;
+
+    const cProducts = [...this.state.products];
+    const index = cProducts.findIndex((el) => el.cca3 === id);
+
+    const product = Object.assign({}, cProducts[index]);
+    product.name.common = query;
+
+    cProducts[index] = product;
+
+    this.setState((prevState) => {
+      return (prevState.products = cProducts);
+    });
+  };
+
   render() {
     let fProducts;
     const {
@@ -115,6 +132,7 @@ class ProductPage extends React.Component {
           <Card
             products={fProducts}
             deleteProductHandler={this.deleteProductHandler}
+            changeNameHandler={this.changeNameHandler}
           />
         )}
       </div>
