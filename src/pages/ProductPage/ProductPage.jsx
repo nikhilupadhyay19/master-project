@@ -9,7 +9,6 @@ class ProductPage extends React.Component {
     this.state = {
       isLoading: true,
       products: [],
-      isToggle: true,
       searchQuery: "",
       selectQuery: "Select All Continents",
       changeNameQuery: ""
@@ -88,14 +87,7 @@ class ProductPage extends React.Component {
 
   render() {
     let fProducts;
-    const {
-      isLoading,
-      products,
-      isToggle,
-      searchQuery,
-      selectQuery
-    } = this.state;
-    console.log(this.state);
+    const { isLoading, products, searchQuery, selectQuery } = this.state;
 
     // const fProducts = products.filter((el) =>
     //   el.name.common.toLowerCase().includes(searchQuery)
@@ -115,12 +107,8 @@ class ProductPage extends React.Component {
 
     const previewText = "Please wait while the data has been loaded...";
 
-    console.log(fProducts);
-
     return (
       <div className="product-page">
-        <button onClick={this.deleteProductHandler}>toogle</button>
-        {isToggle ? <p>Welcome to Product page...</p> : <p>Good Bye...</p>}
         <SearchBox searchProductHandler={this.searchProductHandler} />
         <SelectBox
           data={fProducts}
