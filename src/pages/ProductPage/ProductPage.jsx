@@ -37,16 +37,6 @@ class ProductPage extends React.Component {
     }
   }
 
-  async componentDidMount() {
-    try {
-      const data = await this.getJSON("https://restcountries.com/v3.1/all");
-      this.setState({ products: data });
-      this.setState({ isLoading: false });
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   searchProductHandler = (e) => {
     let query = e.target.value.toLowerCase();
     this.setState((prevState) => {
@@ -85,6 +75,28 @@ class ProductPage extends React.Component {
     });
   };
 
+  async componentDidMount() {
+    try {
+      const data = await this.getJSON("https://restcountries.com/v3.1/all");
+      this.setState({ products: data });
+      this.setState({ isLoading: false });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(prevProps, prevState);
+    if (prevState.searchQuery !== this.state.searchQuery) {
+      this.setState((prevState, prevProps) => {
+        return (prevState.products = this.state.products.filter(
+          (el) =>
+            el.name.common.toLowerCase().indexOf(this.state.searchQuery) !== -1
+        ));
+      });
+    }
+  }
+
   render() {
     let fProducts;
     const { isLoading, products, searchQuery, selectQuery } = this.state;
@@ -97,13 +109,8 @@ class ProductPage extends React.Component {
       fProducts = products.filter(
         (el) => el.name.common.toLowerCase().indexOf(searchQuery) !== -1
       );
-    } else {
-      fProducts = products.filter(
-        (el) =>
-          el.name.common.toLowerCase().indexOf(searchQuery) !== -1 &&
-          el.continents[0] === selectQuery
-      );
     }
+    //
 
     const previewText = "Please wait while the data has been loaded...";
 
